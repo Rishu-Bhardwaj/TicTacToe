@@ -12,6 +12,7 @@ public class Game {
     private final int[] arrCol = new int[cellCount];
     private int drl = 0;
     private int dlr = 0;
+    private int numMoves=0;
     private GameStatus gameStatus;
 
     public Game(Player p1, Player p2) {
@@ -34,6 +35,7 @@ public class Game {
     public boolean play(int row, int col) {
         if (GameStatus.PLAYING == gameStatus) {
             if (isValidMove(row, col)) {
+                numMoves++;
                 board.boxes[row][col].setPiece(currentPlayer.getPiece());
                 if (checkIfWon(row, col)) {
                     board.printBoardStatus();
@@ -64,9 +66,7 @@ public class Game {
     }
 
     private boolean checkIfDraw(int row, int col) {
-        if (drl > cellCount || dlr > cellCount || arrCol[col] > cellCount || arrRow[row] > cellCount
-                || -cellCount > arrRow[row] || drl < -cellCount || dlr < -cellCount || arrCol[col] < -cellCount) {
-
+        if(numMoves==9){
             gameStatus = GameStatus.DRAW;
             System.out.println();
             System.out.println("*** Game has been finished with status DRAW!! ***");
